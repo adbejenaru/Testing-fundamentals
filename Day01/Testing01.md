@@ -1,145 +1,19 @@
-Testarea software în Java implică verificarea faptului că aplicațiile Java funcționează corect și îndeplinesc cerințele specificate. Acest proces include diferite tipuri de testare, de la teste unitare care verifică componente individuale până la teste de sistem care evaluează aplicația în ansamblu. Iată o prezentare detaliată:
+### Testele Software
 
-Iată o explicație detaliată a fiecărui tip de testare software în Java:
+Testarea software este un proces crucial în dezvoltarea și asigurarea calității software-ului. Scopul principal al acestui proces este de a verifica dacă software-ul respectă cerințele și așteptările utilizatorului, conform specificațiilor proiectului.
 
-### 1. **Testele Unitare (Unit Tests)**
+### Tipuri de Teste
 
-#### Definiție:
-Testele unitare sunt teste automate care verifică funcționalitatea unor unități individuale de cod, de obicei metode dintr-o clasă.
+#### 1. **Testele Unitare (Unit Tests)**
+Testele unitare sunt cele mai mici și cele mai specifice teste din procesul de testare software. Ele se concentrează pe verificarea funcționării corecte a unei unități individuale de cod, cum ar fi o metodă sau o funcție dintr-o clasă. Fiecare test unitar izolează unitatea testată de restul codului pentru a se asigura că rezultatele sale sunt precise și previzibile. Aceste teste sunt esențiale pentru detectarea erorilor la nivel de componentă înainte ca acestea să se propage în alte părți ale aplicației.
 
-#### Scop:
-- Asigură că fiecare unitate de cod funcționează conform așteptărilor.
-- Detectează erorile și bug-urile la nivel de metodă sau funcție.
+#### 2. **Testele de Integrare (Integration Tests)**
+Testele de integrare verifică modul în care diferite module sau componente ale unui sistem funcționează împreună. După ce fiecare componentă a fost verificată individual prin teste unitare, testele de integrare se asigură că interacțiunile dintre componente sunt corecte și că datele sunt transferate corect între ele. Aceste teste ajută la identificarea problemelor de interfațare și de comunicare între modulele sistemului.
 
-#### Instrumente:
-- **JUnit**: Cel mai utilizat cadru pentru testarea unitară în Java.
-- **TestNG**: O alternativă la JUnit, oferind funcționalități suplimentare.
+#### 3. **Testele de Sistem (System Tests)**
+Testele de sistem evaluează întregul sistem ca un tot unitar, verificând toate componentele și funcționalitățile împreună. Aceste teste sunt realizate pentru a verifica dacă întregul sistem funcționează conform specificațiilor și cerințelor. Testele de sistem includ verificarea funcționalităților majore ale aplicației, comportamentul sistemului în diverse scenarii și interacțiunile dintre diferitele componente ale sistemului.
 
-#### Exemplu:
-```java
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.Test;
+#### 4. **Testele de Acceptare (Acceptance Tests)**
+Testele de acceptare sunt realizate pentru a valida faptul că software-ul îndeplinește cerințele și așteptările utilizatorului sau clientului. Aceste teste sunt adesea ultimele care se efectuează înainte de livrarea produsului și sunt adesea realizate de către echipele de QA (Quality Assurance) sau de către utilizatorii finali. Testele de acceptare se concentrează pe scenarii de utilizare reală și pe verificarea conformității software-ului cu specificațiile proiectului și cerințele clientului.
 
-public class CalculatorTest {
-
-    @Test
-    public void testAdd() {
-        Calculator calculator = new Calculator();
-        int result = calculator.add(2, 3);
-        assertEquals(5, result);
-    }
-}
-```
-Acest test verifică dacă metoda `add` din clasa `Calculator` returnează suma corectă a două numere.
-
-### 2. **Testele de Integrare (Integration Tests)**
-
-#### Definiție:
-Testele de integrare verifică modul în care mai multe module sau componente funcționează împreună.
-
-#### Scop:
-- Asigură că modulele integrate colaborează corect.
-- Detectează problemele de interfațare între componente.
-
-#### Instrumente:
-- **Spring Test**: Pentru testarea aplicațiilor bazate pe Spring.
-- **Mockito**: Pentru crearea de mock-uri și simularea comportamentului dependențelor.
-
-#### Exemplu:
-```java
-import static org.mockito.Mockito.*;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
-@SpringBootTest
-public class OrderServiceIntegrationTest {
-
-    @Autowired
-    private OrderService orderService;
-
-    @Autowired
-    private PaymentService paymentService;
-
-    @Test
-    public void testPlaceOrder() {
-        // Mocking paymentService
-        when(paymentService.processPayment(any())).thenReturn(true);
-
-        boolean result = orderService.placeOrder(new Order());
-        assertTrue(result);
-    }
-}
-```
-Acest test verifică integrarea dintre `OrderService` și `PaymentService`.
-
-### 3. **Testele de Sistem (System Tests)**
-
-#### Definiție:
-Testele de sistem evaluează aplicația completă, verificând toate componentele și funcționalitățile împreună.
-
-#### Scop:
-- Asigură că întregul sistem funcționează conform specificațiilor.
-- Testează aplicația în mediu real sau similar cu cel de producție.
-
-#### Instrumente:
-- **Selenium**: Pentru testarea interfețelor web.
-- **Cucumber**: Pentru scrierea testelor în limbaj natural.
-
-#### Exemplu:
-```java
-import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-
-public class LoginSystemTest {
-
-    @Test
-    public void testLogin() {
-        WebDriver driver = new ChromeDriver();
-        driver.get("http://example.com/login");
-
-        WebElement usernameField = driver.findElement(By.name("username"));
-        WebElement passwordField = driver.findElement(By.name("password"));
-        WebElement loginButton = driver.findElement(By.name("login"));
-
-        usernameField.sendKeys("testuser");
-        passwordField.sendKeys("password");
-        loginButton.click();
-
-        WebElement welcomeMessage = driver.findElement(By.id("welcome"));
-        assertTrue(welcomeMessage.isDisplayed());
-
-        driver.quit();
-    }
-}
-```
-Acest test verifică procesul de autentificare pe un site web.
-
-### 4. **Testele de Acceptare (Acceptance Tests)**
-
-#### Definiție:
-Testele de acceptare verifică dacă sistemul respectă cerințele și specificațiile definite de utilizator sau client.
-
-#### Scop:
-- Validează că aplicația îndeplinește nevoile și așteptările utilizatorilor.
-- Este adesea ultimul pas înainte de livrarea produsului.
-
-#### Instrumente:
-- **Cucumber**: Pentru definirea scenariilor de utilizare în limbaj natural.
-- **FitNesse**: Un wiki-based framework pentru testare de acceptare.
-
-#### Exemplu:
-```gherkin
-Feature: User Login
-  Scenario: Successful Login
-    Given the user is on the login page
-    When the user enters valid credentials
-    Then the user should be redirected to the homepage
-    And a welcome message should be displayed
-```
-Acest scenariu de testare scris în Gherkin verifică procesul de autentificare și redirecționarea utilizatorului după un login reușit.
-
-În concluzie, fiecare tip de testare joacă un rol crucial în asigurarea calității software-ului, de la testarea componentelor individuale până la validarea întregului sistem conform cerințelor utilizatorilor.
+Fiecare tip de testare joacă un rol esențial în asigurarea calității și funcționalității software-ului. Împreună, aceste teste ajută la identificarea și corectarea problemelor, asigurând astfel livrarea unui produs final robust și de înaltă calitate.
