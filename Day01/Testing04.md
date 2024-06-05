@@ -1,114 +1,101 @@
-Sigur, să luăm un alt exemplu. Vom crea o nouă clasă `BankAccount` care va reprezenta un cont bancar și vom testa metoda de retragere (`withdraw`). Vom utiliza același tipar `Given-When-Then` pentru a structura testele.
+Conceptul de `Given-When-Then` este un tipar de scriere a testelor utilizat frecvent în dezvoltarea software, în special în testarea comportamentului (Behavior-Driven Development - BDD). Acest tipar ajută la structurarea testelor într-un mod clar și ușor de înțeles, atât pentru dezvoltatori, cât și pentru părțile interesate non-tehnice. Iată o explicație detaliată a acestui tipar, aplicată în contextul testării în Java:
 
-### Clasa `BankAccount`
+### Structura `Given-When-Then`
+
+1. **Given (Dat fiind)**: Configurarea stării inițiale a sistemului sau a contextului de testare. Aici se pregătește tot ceea ce este necesar pentru test, cum ar fi inițializarea obiectelor, setarea valorilor de intrare și orice altă configurare necesară.
+   
+2. **When (Când)**: Acțiunea specifică pe care o testezi. Aceasta este operația sau metoda pe care dorești să o verifici, cum ar fi apelarea unei metode sau trimiterea unei cereri.
+
+3. **Then (Atunci)**: Verificarea rezultatelor acțiunii. Aici se verifică dacă rezultatele sunt conforme cu așteptările definite. Se folosesc afirmații (assertions) pentru a compara rezultatele obținute cu cele așteptate.
+
+### Exemplu de Test `Given-When-Then` în Java
+
+Să presupunem că vrem să testăm metoda `divide` din clasa `Calculator` pe care am discutat-o anterior.
+
+#### Clasa `Calculator`
 
 ```java
-package org.bank;
+package org.calculator;
 
-public class BankAccount {
-    private double balance;
-
-    public BankAccount(double initialBalance) {
-        if (initialBalance < 0) {
-            throw new IllegalArgumentException("Initial balance cannot be negative");
-        }
-        this.balance = initialBalance;
+public class Calculator {
+    public int add(int a, int b) {
+        return a + b;
     }
 
-    public double getBalance() {
-        return balance;
+    public int subtract(int a, int b) {
+        return a - b;
     }
 
-    public void deposit(double amount) {
-        if (amount < 0) {
-            throw new IllegalArgumentException("Deposit amount cannot be negative");
-        }
-        balance += amount;
+    public int multiply(int a, int b) {
+        return a * b;
     }
 
-    public void withdraw(double amount) {
-        if (amount < 0) {
-            throw new IllegalArgumentException("Withdrawal amount cannot be negative");
+    public int divide(int a, int b) {
+        if (b == 0) {
+            throw new IllegalArgumentException("Cannot divide by zero");
         }
-        if (amount > balance) {
-            throw new IllegalArgumentException("Insufficient funds");
-        }
-        balance -= amount;
+        return a / b;
     }
 }
 ```
 
-### Teste `Given-When-Then`
+#### Testul `Given-When-Then`
 
-Vom folosi JUnit pentru a scrie testele pentru metoda `withdraw`.
-
-#### Testele `BankAccountTest`
+Vom folosi JUnit pentru a scrie testele noastre în Java. Iată un exemplu de test pentru metoda `divide`:
 
 ```java
-import org.bank.BankAccount;
+import org.calculator.Calculator;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class BankAccountTest {
+public class CalculatorTest {
 
     @Test
-    public void testWithdraw() {
+    public void testDivide() {
         // Given
-        BankAccount account = new BankAccount(100.0);
-        double amountToWithdraw = 50.0;
+        Calculator calculator = new Calculator();
+        int a = 10;
+        int b = 2;
 
         // When
-        account.withdraw(amountToWithdraw);
+        int result = calculator.divide(a, b);
 
         // Then
-        assertEquals(50.0, account.getBalance());
+        assertEquals(5, result);
     }
 
     @Test
-    public void testWithdrawInsufficientFunds() {
+    public void testDivideByZero() {
         // Given
-        BankAccount account = new BankAccount(100.0);
-        double amountToWithdraw = 150.0;
+        Calculator calculator = new Calculator();
+        int a = 10;
+        int b = 0;
 
         // When & Then
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            account.withdraw(amountToWithdraw);
+            calculator.divide(a, b);
         });
 
-        assertEquals("Insufficient funds", exception.getMessage());
-    }
-
-    @Test
-    public void testWithdrawNegativeAmount() {
-        // Given
-        BankAccount account = new BankAccount(100.0);
-        double amountToWithdraw = -50.0;
-
-        // When & Then
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            account.withdraw(amountToWithdraw);
-        });
-
-        assertEquals("Withdrawal amount cannot be negative", exception.getMessage());
+        assertEquals("Cannot divide by zero", exception.getMessage());
     }
 }
 ```
 
 ### Explicație Exemplu
 
-1. **Testul `testWithdraw`**:
-    - **Given**: Inițializează un cont bancar `BankAccount` cu un sold inițial de `100.0` și definește suma de retras `50.0`.
-    - **When**: Apelează metoda `withdraw` cu suma de `50.0`.
-    - **Then**: Verifică dacă soldul contului este `50.0` folosind `assertEquals`.
+1. **Testul `testDivide`**:
+    - **Given**: Inițializează un obiect `Calculator` și definește valorile `a` și `b`.
+    - **When**: Apelează metoda `divide` cu valorile `a` și `b`.
+    - **Then**: Verifică dacă rezultatul este `5` folosind `assertEquals`.
 
-2. **Testul `testWithdrawInsufficientFunds`**:
-    - **Given**: Inițializează un cont bancar `BankAccount` cu un sold inițial de `100.0` și definește suma de retras `150.0`.
-    - **When & Then**: Apelează metoda `withdraw` și verifică dacă aruncă o excepție `IllegalArgumentException` cu mesajul "Insufficient funds".
+2. **Testul `testDivideByZero`**:
+    - **Given**: Inițializează un obiect `Calculator` și definește valorile `a` și `b` (unde `b` este `0`).
+    - **When & Then**: Apelează metoda `divide` și verifică dacă aruncă o excepție `IllegalArgumentException`. De asemenea, verifică dacă mesajul excepției este "Cannot divide by zero".
 
-3. **Testul `testWithdrawNegativeAmount`**:
-    - **Given**: Inițializează un cont bancar `BankAccount` cu un sold inițial de `100.0` și definește suma de retras `-50.0`.
-    - **When & Then**: Apelează metoda `withdraw` și verifică dacă aruncă o excepție `IllegalArgumentException` cu mesajul "Withdrawal amount cannot be negative".
+### Beneficiile Tiparului `Given-When-Then`
 
-### Beneficiile acestui tipar
+- **Claritate**: Structurarea testelor în acest mod face ca intenția testului să fie clară și ușor de înțeles.
+- **Separare**: Separă clar starea inițială, acțiunea și rezultatele așteptate, ceea ce ajută la identificarea rapidă a problemei în caz de eșec al testului.
+- **Comunicare**: Este un mod eficient de a comunica comportamentul așteptat atât dezvoltatorilor, cât și părților interesate non-tehnice.
 
-Aceste teste structurate în formatul `Given-When-Then` fac codul de testare mai lizibil și ușor de înțeles. Prin separarea clară a fiecărei etape, putem vedea exact ce condiții inițiale sunt stabilite, ce acțiuni sunt întreprinse și ce rezultate sunt așteptate, ceea ce facilitează diagnosticarea problemelor și îmbunătățirea calității codului.
+Prin utilizarea tiparului `Given-When-Then`, testele devin mai structurate și mai intuitive, facilitând atât dezvoltarea, cât și întreținerea codului de testare.
