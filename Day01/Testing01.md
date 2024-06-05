@@ -1,47 +1,145 @@
 Testarea software în Java implică verificarea faptului că aplicațiile Java funcționează corect și îndeplinesc cerințele specificate. Acest proces include diferite tipuri de testare, de la teste unitare care verifică componente individuale până la teste de sistem care evaluează aplicația în ansamblu. Iată o prezentare detaliată:
 
-### 1. **Tipuri de Testare Software**
+Desigur! Iată o explicație detaliată a fiecărui tip de testare software în Java:
 
-#### Testare Unitară
-- **Scop**: Să testeze unități sau componente individuale ale software-ului.
-- **Instrumente**: JUnit, TestNG.
-- **Exemplu**: Testarea unei singure metode dintr-o clasă pentru a se asigura că funcționează conform așteptărilor.
+### 1. **Testele Unitare (Unit Tests)**
 
-#### Testare de Integrare
-- **Scop**: Să testeze interacțiunea dintre mai multe module sau componente.
-- **Instrumente**: Mockito (pentru mock-uri), Spring Test.
-- **Exemplu**: Verificarea modului în care două clase comunică între ele prin metode și interfețe.
+#### Definiție:
+Testele unitare sunt teste automate care verifică funcționalitatea unor unități individuale de cod, de obicei metode dintr-o clasă.
 
-#### Testare Funcțională
-- **Scop**: Să testeze funcționalitățile specifice ale aplicației, conform cerințelor.
-- **Instrumente**: Selenium, Cucumber.
-- **Exemplu**: Testarea unei funcționalități de autentificare pentru a se asigura că utilizatorii pot intra în aplicație.
+#### Scop:
+- Asigură că fiecare unitate de cod funcționează conform așteptărilor.
+- Detectează erorile și bug-urile la nivel de metodă sau funcție.
 
-#### Testare de Regresie
-- **Scop**: Să asigure că modificările recente nu au introdus noi erori.
-- **Instrumente**: JUnit, TestNG (cu suite de teste de regresie).
-- **Exemplu**: Rularea unui set de teste după o actualizare a codului pentru a verifica că nu au apărut bug-uri noi.
+#### Instrumente:
+- **JUnit**: Cel mai utilizat cadru pentru testarea unitară în Java.
+- **TestNG**: O alternativă la JUnit, oferind funcționalități suplimentare.
 
-#### Testare de Performanță
-- **Scop**: Să evalueze performanța aplicației sub diverse condiții de încărcare.
-- **Instrumente**: JMeter, Gatling.
-- **Exemplu**: Testarea timpului de răspuns al serverului sub o sarcină mare de utilizatori simultani.
+#### Exemplu:
+```java
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
-### 2. **Instrumente și Biblioteci pentru Testare în Java**
+public class CalculatorTest {
 
-- **JUnit**: Un cadru pentru testarea unitară care oferă anotații, aserțiuni și funcționalități pentru a rula și organiza teste.
-- **TestNG**: Similar cu JUnit, dar oferă funcționalități suplimentare, cum ar fi suportul pentru testarea paralelă și gruparea testelor.
-- **Mockito**: O bibliotecă pentru crearea de mock-uri și teste de integrare, care ajută la simularea comportamentului dependențelor.
-- **Selenium**: Utilizat pentru automatizarea testelor funcționale ale interfețelor web.
-- **Cucumber**: Permite scrierea de teste în limbaj natural (Gherkin), facilitând colaborarea între dezvoltatori și echipele de business.
-- **JMeter**: Utilizat pentru testarea de performanță și simularea sarcinilor de utilizatori asupra aplicației.
+    @Test
+    public void testAdd() {
+        Calculator calculator = new Calculator();
+        int result = calculator.add(2, 3);
+        assertEquals(5, result);
+    }
+}
+```
+Acest test verifică dacă metoda `add` din clasa `Calculator` returnează suma corectă a două numere.
 
-### 3. **Practicile Bune în Testarea Software în Java**
+### 2. **Testele de Integrare (Integration Tests)**
 
-- **Scrierea de teste clare și concise**: Fiecare test ar trebui să fie ușor de înțeles și să verifice un aspect specific al codului.
-- **Utilizarea de mock-uri pentru dependențe**: Ajută la izolarea unităților de cod pentru testare.
-- **Rularea frecventă a testelor**: Asigură că eventualele erori sunt detectate rapid și nu se propagă în alte părți ale aplicației.
-- **Integrarea continuă**: Folosirea unor servere de integrare continuă (CI) pentru a rula testele automat la fiecare modificare a codului.
-- **Acoperirea codului**: Asigurarea că majoritatea codului este acoperit de teste pentru a reduce riscul de bug-uri.
+#### Definiție:
+Testele de integrare verifică modul în care mai multe module sau componente funcționează împreună.
 
-Testarea software în Java este esențială pentru a asigura calitatea și funcționalitatea aplicațiilor dezvoltate. Utilizarea corectă a instrumentelor și practicilor de testare poate ajuta la identificarea și remedierea problemelor din timp, economisind timp și resurse pe termen lung.
+#### Scop:
+- Asigură că modulele integrate colaborează corect.
+- Detectează problemele de interfațare între componente.
+
+#### Instrumente:
+- **Spring Test**: Pentru testarea aplicațiilor bazate pe Spring.
+- **Mockito**: Pentru crearea de mock-uri și simularea comportamentului dependențelor.
+
+#### Exemplu:
+```java
+import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+public class OrderServiceIntegrationTest {
+
+    @Autowired
+    private OrderService orderService;
+
+    @Autowired
+    private PaymentService paymentService;
+
+    @Test
+    public void testPlaceOrder() {
+        // Mocking paymentService
+        when(paymentService.processPayment(any())).thenReturn(true);
+
+        boolean result = orderService.placeOrder(new Order());
+        assertTrue(result);
+    }
+}
+```
+Acest test verifică integrarea dintre `OrderService` și `PaymentService`.
+
+### 3. **Testele de Sistem (System Tests)**
+
+#### Definiție:
+Testele de sistem evaluează aplicația completă, verificând toate componentele și funcționalitățile împreună.
+
+#### Scop:
+- Asigură că întregul sistem funcționează conform specificațiilor.
+- Testează aplicația în mediu real sau similar cu cel de producție.
+
+#### Instrumente:
+- **Selenium**: Pentru testarea interfețelor web.
+- **Cucumber**: Pentru scrierea testelor în limbaj natural.
+
+#### Exemplu:
+```java
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class LoginSystemTest {
+
+    @Test
+    public void testLogin() {
+        WebDriver driver = new ChromeDriver();
+        driver.get("http://example.com/login");
+
+        WebElement usernameField = driver.findElement(By.name("username"));
+        WebElement passwordField = driver.findElement(By.name("password"));
+        WebElement loginButton = driver.findElement(By.name("login"));
+
+        usernameField.sendKeys("testuser");
+        passwordField.sendKeys("password");
+        loginButton.click();
+
+        WebElement welcomeMessage = driver.findElement(By.id("welcome"));
+        assertTrue(welcomeMessage.isDisplayed());
+
+        driver.quit();
+    }
+}
+```
+Acest test verifică procesul de autentificare pe un site web.
+
+### 4. **Testele de Acceptare (Acceptance Tests)**
+
+#### Definiție:
+Testele de acceptare verifică dacă sistemul respectă cerințele și specificațiile definite de utilizator sau client.
+
+#### Scop:
+- Validează că aplicația îndeplinește nevoile și așteptările utilizatorilor.
+- Este adesea ultimul pas înainte de livrarea produsului.
+
+#### Instrumente:
+- **Cucumber**: Pentru definirea scenariilor de utilizare în limbaj natural.
+- **FitNesse**: Un wiki-based framework pentru testare de acceptare.
+
+#### Exemplu:
+```gherkin
+Feature: User Login
+  Scenario: Successful Login
+    Given the user is on the login page
+    When the user enters valid credentials
+    Then the user should be redirected to the homepage
+    And a welcome message should be displayed
+```
+Acest scenariu de testare scris în Gherkin verifică procesul de autentificare și redirecționarea utilizatorului după un login reușit.
+
+În concluzie, fiecare tip de testare joacă un rol crucial în asigurarea calității software-ului, de la testarea componentelor individuale până la validarea întregului sistem conform cerințelor utilizatorilor.
