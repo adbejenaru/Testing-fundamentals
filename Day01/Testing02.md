@@ -15,7 +15,7 @@ Testele unitare ar trebui să fie izolate și independente unul de celălalt. Un
 Un test pentru funcția de adăugare a unei clase de calculator nu ar trebui să depindă de un test care verifică funcția de scădere. Fiecare test ar trebui să fie complet independent.
 
 #### 3. **Repeatable (Repetabil)**
-Testele unitare ar trebui să fie repetabile în orice mediu. Indiferent dacă rulează pe mașina de dezvoltare, pe un server de integrare continuă sau pe orice alt sistem, rezultatele testelor ar trebui să fie aceleași. Acest lucru implică eliminarea dependențelor de mediul extern (cum ar fi baza de date sau serviciile externe) și utilizarea de mock-uri sau stubs acolo unde este necesar.
+Testele unitare trebuie să fie repetabile în orice mediu. Fie că rulează pe mașina de dezvoltare, pe un server de integrare continuă sau pe alt sistem, rezultatele lor ar trebui să fie consistente. Pentru a asigura acest lucru, este important să eliminăm dependențele de mediul extern (cum ar fi baza de date sau serviciile externe) și să ne asigurăm că toate resursele necesare testelor sunt disponibile și configurate uniform în toate mediile.
 
 **Exemplu Teoretic:**
 Un test care verifică o funcție de calcul ar trebui să producă aceleași rezultate pe orice calculator, indiferent de setările sistemului sau de versiunea software-ului instalat.
