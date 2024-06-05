@@ -34,3 +34,5 @@ Pentru o funcție care adună două numere, testele ar trebui să verifice nu do
 
 ### Concluzie
 Aplicarea principiilor FIRST în testarea unitară contribuie la crearea de teste eficiente, fiabile și ușor de întreținut. Aceste principii ajută dezvoltatorii să identifice rapid erorile și să se asigure că modificările aduse codului nu introduc noi bug-uri, menținând astfel calitatea și stabilitatea software-ului.
+
+JUnit 5 este o platformă de testare pentru limbajul de programare Java, folosită pentru a scrie și a executa teste unitare. Este succesorul versiunii JUnit 4 și aduce multe îmbunătățiri și noi caracteristici. JUnit 5 este de fapt un grup de mai multe module și componente, care împreună formează o platformă flexibilă și extensibilă pentru testare.
