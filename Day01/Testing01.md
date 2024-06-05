@@ -1,6 +1,6 @@
 Testarea software în Java implică verificarea faptului că aplicațiile Java funcționează corect și îndeplinesc cerințele specificate. Acest proces include diferite tipuri de testare, de la teste unitare care verifică componente individuale până la teste de sistem care evaluează aplicația în ansamblu. Iată o prezentare detaliată:
 
-Desigur! Iată o explicație detaliată a fiecărui tip de testare software în Java:
+Iată o explicație detaliată a fiecărui tip de testare software în Java:
 
 ### 1. **Testele Unitare (Unit Tests)**
 
