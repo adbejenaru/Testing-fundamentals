@@ -1,4 +1,4 @@
-În testarea software, "testarea excepțiilor" (testing exceptions) și utilizarea lui `assertThrows` sunt două concepte importante care ajută la asigurarea calității codului și la gestionarea corespunzătoare a erorilor. Iată o explicație detaliată în limba română pentru fiecare concept:
+În testarea software, "testarea excepțiilor" (testing exceptions) și utilizarea lui `assertThrows` sunt două concepte importante care ajută la asigurarea calității codului și la gestionarea corespunzătoare a erorilor. 
 
 ### Testarea Excepțiilor
 
