@@ -1,7 +1,7 @@
 Testele parametrizate în Java permit rularea aceleiași metode de testare cu diferite seturi de date. Aceste teste sunt foarte utile pentru a reduce duplicarea codului de testare și pentru a acoperi mai multe scenarii de testare cu efort minim.
 
 ### Beneficii ale testelor parametrizate:
-1. **Redupla codul de testare**: Scrii metoda de testare o singură dată și rulezi cu diferite date.
+1. **Reducerea codului de testare**: Scrie metoda de testare o singură dată și ruleaz-o cu diferite seturi de date.
 2. **Acoperire mai mare**: Permite testarea unei funcționalități cu multiple seturi de date.
 3. **Ușurința în întreținere**: Adăugarea de noi cazuri de testare devine simplă și curată.
 
